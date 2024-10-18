@@ -7,7 +7,7 @@ Bienvenidos a **News Aggregator**, es una aplicación de noticias diseñada para
 ## 🚀 Funcionalidades
 
 - **Interfaz atractiva** 🎨: Diseño responsivo que se adapta a diferentes dispositivos, ofreciendo una experiencia visualmente agradable.
-- **Persistencia de preferencias** 💾:  Guarda las configuraciones del usuario para personalizar la experiencia en futuras visitas.
+- **Persistencia de preferencias** 💾: Guarda las configuraciones del usuario para personalizar la experiencia en futuras visitas.
 - **Filtrado de noticias** 📱: Permite a los usuarios seleccionar categorías específicas para acceder a contenido relevante.
 - **Integración de API de noticias** 📰: Acceso a contenido actualizado y relevante de diversas fuentes informativas.
 
@@ -42,22 +42,7 @@ ProggresaChallenge/
 |   ├── axiosConfig.ts
 |   ├── main.tsx
 └── README.md
- ```
-## 🛠️ Tecnologías Utilizadas
-
-- **Flask**: Framework web para Python.
-- **Flask-CORS**: Extensión de Flask para manejar Cross-Origin Resource Sharing (CORS).
-- **OpenCV (cv2)**: Biblioteca de visión por computadora para el procesamiento de imágenes y videos.
-- **NumPy (np)**: Biblioteca para el cálculo numérico y el manejo de arreglos multidimensionales.
-- **Mediapipe (Holistic)**: Biblioteca de Google para soluciones de visión por computadora, utilizada para la detección de poses y gestos.
-- **TensorFlow y Keras (load_model)**: Biblioteca y API de alto nivel para construir y entrenar modelos de aprendizaje profundo.
-- **gTTS**: Google Text-to-Speech, una biblioteca para convertir texto a habla.
-- **Pygame**: Biblioteca para desarrollar videojuegos en Python, también utilizada para reproducir audio.
-- **Werkzeug (secure_filename)**: Biblioteca que complementa Flask, proporcionando utilidades adicionales.
-- **Otros módulos de Python**: 
-  - **os**: Interacción con el sistema operativo.
-  - **time (sleep)**: Funciones relacionadas con el tiempo.
-  - **typing (NamedTuple)**: Anotaciones de tipo en Python.
+```
 
 ## 📋 Requisitos
 
@@ -96,53 +81,66 @@ ProggresaChallenge/
 Para clonar este proyecto, sigue los siguientes pasos:
 
 1. **Clona el repositorio**:
-    ```sh
-    git clone https://github.com/FrandyAquino/LenguajeSenas_Web.git
-    cd LenguajeSenas_Web
-    ```
 
-2. **Instala las dependencias**:
-    ```sh
-    pip install -r requirements.txt
-    ```
+   ```sh
+   https://github.com/FrandyAquino/proggresa_challenge.git
+   cd proggresa_challenge
+   ```
 
-3. **Ejecuta la aplicación**:
-    ```sh
-    python app.py
-    ```
+2. **Instala las dependencias del backend**:
+
+   ```sh
+   cd backend
+   npm install
+   ```
+
+3. **Instala las dependencias del frontend**:
+
+   ```sh
+   cd ../frontend
+   npm install
+   ```
+
+4. **Crea el archivo .env**: Dentro de la carpeta backend y agrega las siguientes variables:
+   `sh
+PORT=5000
+MONGO_URI=mongodb+srv://frandyjavieraquino13:kLgQGxZoR1bGzB7N@proggresa.pfpvc.mongodb.net/proggresa?retryWrites=true&w=majority&appName=proggresa
+NEW_API_TOKEN="f8c4d8121f824794a3ca6c4c09230975"
+`
 
 ### 🎥 Uso de la Aplicación
 
-1. **Accede a la aplicación** en tu navegador:
-    ```
-    http://127.0.0.1:5000
-    ```
+1. **Ejecuta el backend**: y espere hasta que diga MongoDB connected
 
-2. **Permite el acceso a la cámara web** cuando se te solicite.
+   ```sh
+   cd ../backend
+   npm run dev
+   ```
 
-3. **Empieza a traducir**: Coloca tu mano frente a la cámara y realiza gestos en lenguaje de señas para ver la traducción en tiempo real.
+2. **Ejecuta el fronted**:
 
-## 🧩 Contribuir
+   ```sh
+   cd ../frontend
+   npm run dev
+   ```
 
-¡Contribuciones son bienvenidas! Si deseas contribuir a este proyecto, por favor sigue estos pasos:
+3. **Dirigete a**:
 
-1. **Fork el repositorio**
-2. **Crea una rama para tu característica** (`git checkout -b feature/AmazingFeature`)
-3. **Confirma tus cambios** (`git commit -m 'Add some AmazingFeature'`)
-4. **Haz push a la rama** (`git push origin feature/AmazingFeature`)
-5. **Abre un Pull Request**
+   ```sh
+   http://localhost:5173/
+   ```
+
+4. **Empieza a utilizar la aplicación**: Para poder utilizar los filtros y demás, primero debes registrarte, así que crea tu cuenta.
+
 
 ## 📞 Contacto
 
-Si tienes alguna pregunta, no dudes en contactarnos:
+Si tienes alguna pregunta, no dudes en contactarme:
 
 - [Frandy Aquino](https://github.com/FrandyAquino) 👨🏽
-- [Ronald Serre](https://github.com/ronaldserre) 🧑‍💻
-- [Cristian Encarnación](https://github.com/cristianEncarnacion) 🧑🏽‍🦲
-- [Jensey Jimenez](https://github.com/JenseyJim) 🧒 
+- [Portafolio](https://frandyaquino.netlify.app/) 🖥️
+
 
 ## 📜 Licencia
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
-# proggresa_challenge
-# proggresa_challenge
