@@ -132,6 +132,61 @@ Para clonar este proyecto, sigue los siguientes pasos:
 
 4. **Empieza a utilizar la aplicación**: Para poder utilizar los filtros y demás, primero debes registrarte, así que crea tu cuenta.
 
+## 🧾 API Usage
+
+## Endpoints de la API
+
+### Artículos
+
+**GET /api/articles**
+
+- Descripción: Recupera una lista de artículos.
+- Middleware: Requiere una sesión activa (`sessionMiddleware`).
+- Respuesta: Array JSON de artículos.
+
+### Usuario
+
+**POST /api/user**
+
+- Descripción: Crea una nueva cuenta de usuario.
+- Middleware: Valida el cuerpo de la solicitud usando `registerSchema`.
+- Cuerpo de la Solicitud: Debe incluir los datos del usuario para el registro.
+
+**GET /api/user**
+
+- Descripción: Recupera una lista de usuarios registrados.
+- Respuesta: Array JSON de usuarios.
+
+**GET /api/user/:userId/preferences**
+
+- Descripción: Recupera las preferencias de un usuario específico.
+- Parámetros de la Ruta: `userId` (ID del usuario).
+- Respuesta: JSON con las preferencias del usuario.
+
+### Inicio de Sesión de Usuario
+
+**POST /api/user/login**
+
+- Descripción: Inicia sesión en la cuenta de usuario.
+- Middleware: Valida el cuerpo de la solicitud usando `userLoginSchema`.
+- Cuerpo de la Solicitud: Debe incluir las credenciales del usuario.
+
+## Middleware
+
+- `sessionMiddleware`: Verifica que la sesión del usuario esté activa.
+- `schemaValidatorMiddleware`: Valida el cuerpo de la solicitud según los esquemas proporcionados (`registerSchema` y `userLoginSchema`).
+
+## 🔧 Configuración de la API de NewsAPI
+
+Para usar la API de NewsAPI en este proyecto, sigue estos pasos:
+
+1. **Regístrate en NewsAPI**: Visita [newsapi.org](https://newsapi.org/) y crea una cuenta para obtener tu clave de API.
+
+2. **Agrega la clave de API a tu archivo .env**: Una vez que tengas la clave, añade una nueva línea en tu archivo `.env` dentro de la carpeta `backend`:
+   ```sh
+   NEWS_API_KEY="tu_clave_de_api_aquí"
+
+
 ## 📞 Contacto
 
 Si tienes alguna pregunta, no dudes en contactarme:
