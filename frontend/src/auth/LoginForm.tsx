@@ -3,7 +3,7 @@ import axios from 'axios';
 
 interface LoginFormProps {
     onLoginSuccess: (username: string) => void;
-    darkMode: boolean; 
+    darkMode: boolean;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, darkMode }) => {
@@ -36,12 +36,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, darkMode }) => {
                 <input
                     type="text"
                     value={username}
+                    placeholder='Escribe un nombre de usuario (no un correo)'
                     onChange={(e) => setUsername(e.target.value)}
-                    className={`border rounded-md p-3 w-full focus:outline-none focus:ring-2 ${
-                        darkMode 
-                            ? 'bg-gray-800 text-white border-gray-600 focus:ring-blue-400' 
-                            : 'bg-white text-gray-900 border-gray-300 focus:ring-blue-400'
-                    }`}
+                    className={`border rounded-md p-3 w-full focus:outline-none focus:ring-2 ${darkMode
+                        ? 'bg-gray-800 text-white border-gray-600 focus:ring-blue-400'
+                        : 'bg-white text-gray-900 border-gray-300 focus:ring-blue-400'
+                        }`}
                     required
                 />
             </div>
@@ -52,23 +52,22 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, darkMode }) => {
                 <input
                     type="password"
                     value={password}
+                    placeholder='Ingrese una contraseña'
                     onChange={(e) => setPassword(e.target.value)}
-                    className={`border rounded-md p-3 w-full focus:outline-none focus:ring-2 ${
-                        darkMode 
-                            ? 'bg-gray-800 text-white border-gray-600 focus:ring-blue-400' 
-                            : 'bg-white text-gray-900 border-gray-300 focus:ring-blue-400'
-                    }`}
+                    className={`border rounded-md p-3 w-full focus:outline-none focus:ring-2 ${darkMode
+                        ? 'bg-gray-800 text-white border-gray-600 focus:ring-blue-400'
+                        : 'bg-white text-gray-900 border-gray-300 focus:ring-blue-400'
+                        }`}
                     required
                 />
             </div>
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
                 type="submit"
-                className={`w-full py-3 rounded-md transition duration-200 ${
-                    darkMode 
-                        ? 'bg-blue-500 text-white hover:bg-blue-400' 
-                        : 'bg-blue-500 text-white hover:bg-blue-600'
-                }`}
+                className={`w-full py-3 rounded-md transition duration-200 ${darkMode
+                    ? 'bg-blue-500 text-white hover:bg-blue-400'
+                    : 'bg-blue-500 text-white hover:bg-blue-600'
+                    }`}
             >
                 Iniciar Sesión
             </button>

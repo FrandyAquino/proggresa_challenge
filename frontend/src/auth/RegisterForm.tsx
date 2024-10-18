@@ -37,6 +37,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterSuccess, darkMode
                 <input
                     type="text"
                     value={username}
+                    placeholder='Escribe un nombre de usuario (no un correo)'
                     onChange={(e) => setUsername(e.target.value)}
                     className={`border rounded-md p-3 w-full focus:outline-none focus:ring-2 transition-colors ${
                         darkMode
@@ -45,6 +46,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterSuccess, darkMode
                     }`}
                     required
                 />
+                <span className='text-gray-600 text-sm'>Minimo 5 caracteres</span>
+
             </div>
             <div>
                 <label className={`block text-sm font-medium mb-1 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -53,6 +56,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterSuccess, darkMode
                 <input
                     type="password"
                     value={password}
+                    placeholder='Ingrese una contraseña'
                     onChange={(e) => setPassword(e.target.value)}
                     className={`border rounded-md p-3 w-full focus:outline-none focus:ring-2 transition-colors ${
                         darkMode
@@ -61,6 +65,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterSuccess, darkMode
                     }`}
                     required
                 />
+                <span className='text-gray-600 text-sm'>Minimo 3 caracteres</span>
+
             </div>
             {error && <p className="text-red-500 text-sm">{error}</p>}
             {successMessage && <p className="text-green-500 text-sm">{successMessage}</p>}

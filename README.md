@@ -79,28 +79,28 @@ ProggresaChallenge/
 
 Para clonar este proyecto, sigue los siguientes pasos:
 
-1. **Clona el repositorio**:
+1. **Clona el repositorio**: Dirigete a la terminal de tu sistema
 
    ```sh
-   https://github.com/FrandyAquino/proggresa_challenge.git
+   git clone https://github.com/FrandyAquino/progressa_challenge.git
    cd proggresa_challenge
    ```
 
-2. **Instala las dependencias del backend**:
+2. **Instala las dependencias del backend**: Abre el proyecto en tu editor de código y dirigete hacia:
 
    ```sh
    cd backend
    npm install
    ```
 
-3. **Instala las dependencias del frontend**:
+3. **Instala las dependencias del frontend**: Luego debes ir a la carpeta del frontend para instalar las dependecias.
 
    ```sh
    cd ../frontend
    npm install
    ```
 
-4. **Crea el archivo .env**: Dentro de la carpeta backend y agrega las siguientes variables:
+4. **Crea el archivo .env**: Ahora ve a la carpeta backend y crea un archivo que se llame ".env" y pega estas variables de entorno:
    ```sh
    PORT=5000
    MONGO_URI=mongodb+srv://frandyjavieraquino13:kLgQGxZoR1bGzB7N@proggresa.pfpvc.mongodb.net/proggresa?retryWrites=true&w=majority&appName=proggresa
@@ -109,22 +109,24 @@ Para clonar este proyecto, sigue los siguientes pasos:
 
 ### 🎥 Uso de la Aplicación
 
-1. **Ejecuta el backend**: y espere hasta que diga MongoDB connected
+1. **Ejecuta el fronted**: Para ejecutar el frontend asegurate de estar en el directorio, ej: user~\progressa_challenge\frontend 
 
    ```sh
-   cd ../backend
+   cd frontend
    npm run dev
    ```
 
 
-2. **Ejecuta el fronted**:
+2. **Ejecuta el backend**: Para ejecutar el backend dentro de su editor de codigo o proyecto abra otra terminal y siga los pasos:
 
    ```sh
-   cd ../frontend
+   cd backend
    npm run dev
    ```
 
-3. **Dirigete a**:
+Espere hasta que diga MongoDB connected
+
+3. **Dirigete a**: Una ves ejecutado el backend y el frontend dirigete hacia la ruta para ver el proyecto, puede tardar unos segundos en subir.
 
    ```sh
    http://localhost:5173/

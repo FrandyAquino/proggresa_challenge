@@ -54,7 +54,7 @@ export const createUser = async (req: RequestDTO<RegisterDTO>, res: Response) =>
         });
     } catch (error) {
         return errorResponse(res, {
-            message: "Error al crear el usuario",
+            message: "El usuario o la contraseña no tiene el mínimo de caracteres requeridos",
             code: "INTERNAL_ERROR"
         });
     }
