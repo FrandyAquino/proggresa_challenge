@@ -117,10 +117,10 @@ Para clonar este proyecto, sigue los siguientes pasos:
    ```
 
 
-2. **Ejecuta el fronted**:
+2. **Ejecuta el fronted**: Cree otra terminal dentro de su proyecto y ejecute:
 
    ```sh
-   cd ../frontend
+   cd frontend
    npm run dev
    ```
 
