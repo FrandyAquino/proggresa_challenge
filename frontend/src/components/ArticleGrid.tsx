@@ -27,7 +27,7 @@ interface ArticleGridProps {
 
 const CACHE_DURATION_MS = 15 * 60 * 1000;
 
-const ArticleGrid: React.FC<ArticleGridProps> = ({ filter, selectedTopics, sources, username }) => {
+const ArticleGrid: React.FC<ArticleGridProps> = ({ darkMode, filter, selectedTopics, sources, username }) => {
     const [articles, setArticles] = useState<Article[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -146,7 +146,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = ({ filter, selectedTopics, sourc
         <div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300">
                 {currentArticles.map((article) => (
-                    <ArticleCard key={article.url} article={article} />
+                    <ArticleCard key={article.url} article={article} darkMode={darkMode} />
                 ))}
             </div>
             <Pagination
@@ -154,6 +154,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = ({ filter, selectedTopics, sourc
                 articlesPerPage={articlesPerPage}
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
+                darkMode={darkMode}
             />
         </div>
     );
