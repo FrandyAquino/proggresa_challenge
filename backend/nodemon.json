@@ -1,0 +1,9 @@
+{
+    "watch": [
+        "src",
+        "docs"
+    ],
+    "ext": ".ts,.js,.md,.env",
+    "ignore": [],
+    "exec": "tsc --project tsconfig.json && node dist/app.js"
+}
