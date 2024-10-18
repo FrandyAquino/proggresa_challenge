@@ -102,11 +102,11 @@ Para clonar este proyecto, sigue los siguientes pasos:
    ```
 
 4. **Crea el archivo .env**: Dentro de la carpeta backend y agrega las siguientes variables:
-   `sh
-PORT=5000
-MONGO_URI=mongodb+srv://frandyjavieraquino13:kLgQGxZoR1bGzB7N@proggresa.pfpvc.mongodb.net/proggresa?retryWrites=true&w=majority&appName=proggresa
-NEW_API_TOKEN="f8c4d8121f824794a3ca6c4c09230975"
-`
+   ```sh
+   PORT=5000
+   MONGO_URI=mongodb+srv://frandyjavieraquino13:kLgQGxZoR1bGzB7N@proggresa.pfpvc.mongodb.net/proggresa?retryWrites=true&w=majority&appName=proggresa
+   NEW_API_TOKEN="f8c4d8121f824794a3ca6c4c09230975"
+   ```
 
 ### 🎥 Uso de la Aplicación
 
@@ -116,6 +116,7 @@ NEW_API_TOKEN="f8c4d8121f824794a3ca6c4c09230975"
    cd ../backend
    npm run dev
    ```
+
 
 2. **Ejecuta el fronted**:
 
@@ -132,7 +133,6 @@ NEW_API_TOKEN="f8c4d8121f824794a3ca6c4c09230975"
 
 4. **Empieza a utilizar la aplicación**: Para poder utilizar los filtros y demás, primero debes registrarte, así que crea tu cuenta.
 
-
 ## 📞 Contacto
 
 Si tienes alguna pregunta, no dudes en contactarme:
@@ -140,7 +140,7 @@ Si tienes alguna pregunta, no dudes en contactarme:
 - [Frandy Aquino](https://github.com/FrandyAquino) 👨🏽
 - [Portafolio](https://frandyaquino.netlify.app/) 🖥️
 
-
 ## 📜 Licencia
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
