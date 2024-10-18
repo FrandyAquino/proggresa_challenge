@@ -37,7 +37,6 @@ ProggresaChallenge/
 |   ├── src/
 |   |   ├── auth/
 |   |   ├── components/
-|   |   ├── utils/
 |   ├── App.tsx
 |   ├── axiosConfig.ts
 |   ├── main.tsx

@@ -10,8 +10,8 @@ const App: React.FC = () => {
         const savedMode = localStorage.getItem('darkMode');
         return savedMode ? JSON.parse(savedMode) : false;
     });
-    const [filterOpen, setFilterOpen] = useState(false);
     const [filter, setFilter] = useState('');
+    const [filterOpen, setFilterOpen] = useState(false);
     const [selectedTopics] = useState<string[]>([]);
     const [sources, setSources] = useState('');
     const [isLogin, setIsLogin] = useState(true);
@@ -170,13 +170,13 @@ const App: React.FC = () => {
                 </div>
             </header>
 
-            <main className="flex-grow max-w-7xl mx-auto p-6">
+            <main className="w-full flex-grow max-w-7xl mx-auto p-6">
                 <Modal isOpen={isModalOpen} onClose={closeModal} darkMode={darkMode}>
                     <h2 className="text-2xl font-bold mb-4">{isLogin ? 'Iniciar Sesión' : 'Registrarse'}</h2>
                     {isLogin ? (
-                        <LoginForm onLoginSuccess={handleLoginSuccess} darkMode={darkMode} /> // Pasa la prop darkMode
+                        <LoginForm onLoginSuccess={handleLoginSuccess} darkMode={darkMode} /> 
                     ) : (
-                        <RegisterForm onRegisterSuccess={handleLoginSuccess} darkMode={darkMode} /> // Asegúrate de que RegisterForm también lo acepte si es necesario
+                        <RegisterForm onRegisterSuccess={handleLoginSuccess} darkMode={darkMode} />
                     )}
                     <button onClick={toggleForm} className="mt-4 text-blue-500 hover:underline">
                         {isLogin ? '¿No tienes una cuenta? Regístrate aquí' : '¿Ya tienes cuenta? Inicia sesión aquí'}
@@ -187,8 +187,8 @@ const App: React.FC = () => {
                     <button
                         onClick={toggleFilter}
                         className={`px-4 py-2 rounded-md transition duration-200 ${darkMode
-                                ? 'bg-blue-600 text-white hover:bg-blue-700'
-                                : 'bg-blue-500 text-white hover:bg-blue-600'
+                            ? 'bg-blue-600 text-white hover:bg-blue-700'
+                            : 'bg-blue-500 text-white hover:bg-blue-600'
                             }`}
                     >
                         {filterOpen ? 'Cerrar Filtros' : 'Filtrar Artículos'}
@@ -196,8 +196,7 @@ const App: React.FC = () => {
                 </div>
 
                 {filterOpen && (
-                    <div className={`rounded-md p-4 mb-4 transition-all duration-300 shadow-lg ${darkMode ? 'bg-gray-800' : 'bg-gray-100'
-                        }`}>
+                    <div className={`w-full rounded-md p-4 mb-4 transition-all duration-300 shadow-lg ${darkMode ? 'bg-gray-800' : 'bg-gray-100'} min-w-[300px]`}>
                         <h2 className={`text-lg font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-800'}`}>Filtrar por:</h2>
                         <div className="mt-4">
                             <h3 className={`font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Temas</h3>
@@ -205,8 +204,8 @@ const App: React.FC = () => {
                                 type="text"
                                 placeholder="Escribir temas o palabras clave"
                                 className={`border rounded-md p-2 w-full mt-1 transition duration-200 ${darkMode
-                                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                                        : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
+                                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                                     }`}
                                 onChange={(e) => setFilter(e.target.value)}
                             />
@@ -217,8 +216,8 @@ const App: React.FC = () => {
                                 type="text"
                                 placeholder="Escribir fuentes"
                                 className={`border rounded-md p-2 w-full mt-1 transition duration-200 ${darkMode
-                                        ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                                        : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
+                                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                                     }`}
                                 onChange={(e) => setSources(e.target.value)}
                             />
