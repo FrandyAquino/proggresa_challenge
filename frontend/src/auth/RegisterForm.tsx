@@ -19,11 +19,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterSuccess, darkMode
                 username,
                 password,
             });
-            setSuccessMessage('Usuario creado con éxito. Puedes iniciar sesión ahora.');
+            setSuccessMessage('User created successfully. You can log in now.');
             setError('');
             onRegisterSuccess(username);
         } catch (err: any) {
-            setError(err.response?.data.message || 'Error al crear el usuario');
+            setError(err.response?.data.message || 'Error creating user');
             setSuccessMessage('');
         }
     };
@@ -32,12 +32,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterSuccess, darkMode
         <form onSubmit={handleRegister} className="space-y-6">
             <div>
                 <label className={`block text-sm font-medium mb-1 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Nombre de usuario
+                    Username
                 </label>
                 <input
                     type="text"
                     value={username}
-                    placeholder='Escribe un nombre de usuario (no un correo)'
+                    placeholder='Enter a username (not an email)'
                     onChange={(e) => setUsername(e.target.value)}
                     className={`border rounded-md p-3 w-full focus:outline-none focus:ring-2 transition-colors ${
                         darkMode
@@ -46,17 +46,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterSuccess, darkMode
                     }`}
                     required
                 />
-                <span className='text-gray-600 text-sm'>Minimo 5 caracteres</span>
-
+                <span className='text-gray-600 text-sm'>Minimum 5 characters</span>
             </div>
             <div>
                 <label className={`block text-sm font-medium mb-1 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Contraseña
+                    Password
                 </label>
                 <input
                     type="password"
                     value={password}
-                    placeholder='Ingrese una contraseña'
+                    placeholder='Enter a password'
                     onChange={(e) => setPassword(e.target.value)}
                     className={`border rounded-md p-3 w-full focus:outline-none focus:ring-2 transition-colors ${
                         darkMode
@@ -65,8 +64,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterSuccess, darkMode
                     }`}
                     required
                 />
-                <span className='text-gray-600 text-sm'>Minimo 3 caracteres</span>
-
+                <span className='text-gray-600 text-sm'>Minimum 3 characters</span>
             </div>
             {error && <p className="text-red-500 text-sm">{error}</p>}
             {successMessage && <p className="text-green-500 text-sm">{successMessage}</p>}
@@ -76,7 +74,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterSuccess, darkMode
                     darkMode ? 'bg-green-600 hover:bg-green-500 text-white' : 'bg-green-500 hover:bg-green-600 text-white'
                 }`}
             >
-                Registrarse
+                Register
             </button>
         </form>
     );

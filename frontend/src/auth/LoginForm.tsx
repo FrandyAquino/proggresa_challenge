@@ -23,7 +23,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, darkMode }) => {
             setError('');
             onLoginSuccess(username);
         } catch (err: any) {
-            setError(err.response?.data.message || 'Error en el inicio de sesión');
+            setError(err.response?.data.message || 'Login error');
         }
     };
 
@@ -31,12 +31,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, darkMode }) => {
         <form onSubmit={handleLogin} className="space-y-6">
             <div>
                 <label className={`block text-sm font-medium mb-1 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Nombre de usuario
+                    Username
                 </label>
                 <input
                     type="text"
                     value={username}
-                    placeholder='Escribe un nombre de usuario (no un correo)'
+                    placeholder='Enter a username (not an email)'
                     onChange={(e) => setUsername(e.target.value)}
                     className={`border rounded-md p-3 w-full focus:outline-none focus:ring-2 ${darkMode
                         ? 'bg-gray-800 text-white border-gray-600 focus:ring-blue-400'
@@ -47,12 +47,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, darkMode }) => {
             </div>
             <div>
                 <label className={`block text-sm font-medium mb-1 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Contraseña
+                    Password
                 </label>
                 <input
                     type="password"
                     value={password}
-                    placeholder='Ingrese una contraseña'
+                    placeholder='Enter a password'
                     onChange={(e) => setPassword(e.target.value)}
                     className={`border rounded-md p-3 w-full focus:outline-none focus:ring-2 ${darkMode
                         ? 'bg-gray-800 text-white border-gray-600 focus:ring-blue-400'
@@ -69,7 +69,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, darkMode }) => {
                     : 'bg-blue-500 text-white hover:bg-blue-600'
                     }`}
             >
-                Iniciar Sesión
+                Sign in
             </button>
         </form>
     );

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { motion, AnimatePresence } from 'framer-motion';
 import ArticleCard from './ArticleCard';
 import Pagination from './Pagination';
+import { Loader2 } from 'lucide-react';
 
 interface Article {
     source: {
@@ -32,28 +34,24 @@ const ArticleGrid: React.FC<ArticleGridProps> = ({ darkMode, filter, selectedTop
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const articlesPerPage = 15;
+    const articlesPerPage = 12;
     const [debouncedFilter, setDebouncedFilter] = useState(filter);
     const [debouncedSources, setDebouncedSources] = useState(sources);
 
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedFilter(filter);
+            setCurrentPage(1);
         }, 300);
-
-        return () => {
-            clearTimeout(handler);
-        };
+        return () => clearTimeout(handler);
     }, [filter]);
 
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSources(sources);
+            setCurrentPage(1);
         }, 300);
-
-        return () => {
-            clearTimeout(handler);
-        };
+        return () => clearTimeout(handler);
     }, [sources]);
 
     const getCacheKey = () => `articles_${username || 'guest'}_${selectedTopics.join(',')}_${debouncedSources}_${debouncedFilter}`;
@@ -62,8 +60,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = ({ darkMode, filter, selectedTop
         const cacheKey = getCacheKey();
         const cachedData = localStorage.getItem(cacheKey);
         if (cachedData) {
-            const parsedData = JSON.parse(cachedData);
-            const { articles, timestamp } = parsedData;
+            const { articles, timestamp } = JSON.parse(cachedData);
             if (Date.now() - timestamp < CACHE_DURATION_MS) {
                 setArticles(articles);
                 setLoading(false);
@@ -75,39 +72,35 @@ const ArticleGrid: React.FC<ArticleGridProps> = ({ darkMode, filter, selectedTop
 
     const cacheArticles = (articles: Article[]) => {
         const cacheKey = getCacheKey();
-        const dataToCache = {
+        localStorage.setItem(cacheKey, JSON.stringify({
             articles,
             timestamp: Date.now(),
-        };
-        localStorage.setItem(cacheKey, JSON.stringify(dataToCache));
+        }));
     };
 
     const fetchArticles = async () => {
         setLoading(true);
         try {
             let url = 'http://localhost:5000/api/articles';
-            const categoryParam = selectedTopics.length > 0 ? `category=${selectedTopics.join(',')}` : '';
-            const sourcesParam = debouncedSources ? `sources=${encodeURIComponent(debouncedSources)}` : '';
-            const filterParam = debouncedFilter ? `q=${encodeURIComponent(debouncedFilter)}` : '';
-            const token2 = localStorage.getItem("token");
+            const params = [
+                selectedTopics.length > 0 ? `category=${selectedTopics.join(',')}` : '',
+                debouncedSources ? `sources=${encodeURIComponent(debouncedSources)}` : '',
+                debouncedFilter ? `q=${encodeURIComponent(debouncedFilter)}` : ''
+            ].filter(Boolean).join('&');
 
-            const params = [categoryParam, sourcesParam, filterParam].filter(param => param).join('&');
-            if (params) {
-                url += `?${params}`;
-            }
+            if (params) url += `?${params}`;
 
+            const token = localStorage.getItem("token");
             const response = await axios.get(url, {
-                headers: {
-                    Authorization: token2 ? `Bearer ${token2}` : undefined,
-                },
+                headers: token ? { Authorization: `Bearer ${token}` } : {},
             });
 
             setArticles(response.data);
             cacheArticles(response.data);
             setError(null);
         } catch (err) {
-            console.error('Error al cargar los artículos:', err);
-            setError('Error al cargar los artículos');
+            console.error('Error loading articles:', err);
+            setError('Failed to load articles. Please try again later.');
         } finally {
             setLoading(false);
         }
@@ -120,43 +113,114 @@ const ArticleGrid: React.FC<ArticleGridProps> = ({ darkMode, filter, selectedTop
     }, [debouncedFilter, debouncedSources, selectedTopics]);
 
     const filteredArticles = articles.filter(article => {
-        const isValidArticle = 
-            article.title && article.title !== "[Removed]" &&
-            article.description && article.description !== "[Removed]" &&
-            article.content && article.content !== "[Removed]" &&
-            article.url && article.url !== "[Removed]" &&
-            article.source.name && article.source.name !== "[Removed]";
+        const isValidArticle = [
+            article.title,
+            article.description,
+            article.content,
+            article.url,
+            article.source.name
+        ].every(field => field && field !== "[Removed]");
 
-        const topicMatch = selectedTopics.length === 0 || selectedTopics.includes(article.source.name);
-        const keywordMatch = (article.title?.toLowerCase().includes(debouncedFilter.toLowerCase()) || false) ||
-            (article.description?.toLowerCase().includes(debouncedFilter.toLowerCase()) || false);
-        const sourceMatch = debouncedSources === '' || (article.source.name?.toLowerCase().includes(debouncedSources.toLowerCase()) || false);
-
-        return isValidArticle && topicMatch && keywordMatch && sourceMatch;
+        return isValidArticle &&
+            (!selectedTopics.length || selectedTopics.includes(article.source.name)) &&
+            (!debouncedFilter || 
+                article.title?.toLowerCase().includes(debouncedFilter.toLowerCase()) ||
+                article.description?.toLowerCase().includes(debouncedFilter.toLowerCase())) &&
+            (!debouncedSources || 
+                article.source.name?.toLowerCase().includes(debouncedSources.toLowerCase()));
     });
 
-    const indexOfLastArticle = currentPage * articlesPerPage;
-    const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
-    const currentArticles = filteredArticles.slice(indexOfFirstArticle, indexOfLastArticle);
+    const currentArticles = filteredArticles.slice(
+        (currentPage - 1) * articlesPerPage,
+        currentPage * articlesPerPage
+    );
 
-    if (loading) return <p className="text-center">Cargando artículos...</p>;
-    if (error) return <p className="text-red-500 text-center">{error}</p>;
+    const containerVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+                staggerChildren: 0.1
+            }
+        },
+        exit: { opacity: 0, y: 20 }
+    };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-[400px]">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="flex flex-col items-center space-y-4"
+                >
+                    <Loader2 className={`w-12 h-12 animate-spin ${
+                        darkMode ? 'text-indigo-400' : 'text-indigo-600'
+                    }`} />
+                    <p className={`text-lg font-medium ${
+                        darkMode ? 'text-gray-300' : 'text-gray-600'
+                    }`}>
+                        Loading articles...
+                    </p>
+                </motion.div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex justify-center p-8"
+            >
+                <p className="text-red-500 text-lg font-medium">{error}</p>
+            </motion.div>
+        );
+    }
 
     return (
-        <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300">
-                {currentArticles.map((article) => (
-                    <ArticleCard key={article.url} article={article} darkMode={darkMode} />
-                ))}
-            </div>
-            <Pagination
-                totalArticles={filteredArticles.length}
-                articlesPerPage={articlesPerPage}
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                darkMode={darkMode}
-            />
-        </div>
+        <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="space-y-8"
+        >
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={currentPage}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                >
+                    {currentArticles.map((article, index) => (
+                        <ArticleCard
+                            key={article.url}
+                            article={article}
+                            darkMode={darkMode}
+                            index={index}
+                        />
+                    ))}
+                </motion.div>
+            </AnimatePresence>
+
+            {filteredArticles.length > articlesPerPage && (
+                <Pagination
+                    totalArticles={filteredArticles.length}
+                    articlesPerPage={articlesPerPage}
+                    setCurrentPage={setCurrentPage}
+                    currentPage={currentPage}
+                    darkMode={darkMode}
+                />
+            )}
+        </motion.div>
     );
 };
 

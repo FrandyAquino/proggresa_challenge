@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import ArticleGrid from './components/ArticleGrid';
-import { Moon, Sun, User, Menu } from 'lucide-react';
+import { Moon, Sun, User, Menu, Newspaper, Filter, X } from 'lucide-react';
 import LoginForm from './auth/LoginForm';
 import RegisterForm from './auth/RegisterForm';
 import Modal from './components/Modal';
@@ -20,39 +21,21 @@ const App: React.FC = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
-        const savedUser = localStorage.getItem('username');
-        if (savedUser) {
-            setUser(savedUser);
-        }
-    }, []);
-
-    useEffect(() => {
+        document.documentElement.classList.toggle('dark', darkMode);
         localStorage.setItem('darkMode', JSON.stringify(darkMode));
     }, [darkMode]);
 
-    const toggleDarkMode = () => {
-        setDarkMode((prevMode: boolean) => !prevMode);
-    };
+    useEffect(() => {
+        const savedUser = localStorage.getItem('username');
+        if (savedUser) setUser(savedUser);
+    }, []);
 
-    const toggleFilter = () => {
-        if (!user) {
-            openModal();
-            return;
-        }
-        setFilterOpen(!filterOpen);
-    };
-
-    const toggleForm = () => {
-        setIsLogin(!isLogin);
-    };
-
-    const openModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
+    const toggleDarkMode = () => setDarkMode((prev: any) => !prev);
+    const toggleFilter = () => !user ? openModal() : setFilterOpen(!filterOpen);
+    const toggleForm = () => setIsLogin(!isLogin);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+    const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
     const handleLoginSuccess = (username: string) => {
         setUser(username);
@@ -66,171 +49,193 @@ const App: React.FC = () => {
         localStorage.removeItem('token');
     };
 
-    const toggleMobileMenu = () => {
-        setMobileMenuOpen(!mobileMenuOpen);
-    };
-
     return (
-        <div className={`flex flex-col min-h-screen transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
-            <header className={`${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg transition-all duration-300`}>
+        <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark bg-gray-900 text-white' : 'bg-white text-gray-900'
+            }`}>
+            <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-gray-900/70 border-b border-gray-200 dark:border-gray-700">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center py-4">
-                        <h1 className={`text-2xl sm:text-3xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'} transition-colors duration-300`}>News Aggregator</h1>
+                    <div className="flex h-16 items-center justify-between">
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="flex items-center space-x-3"
+                        >
+                            <Newspaper className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+                            <h1 className="text-2xl font-bold">NewsHub</h1>
+                        </motion.div>
 
-                        <div className="hidden sm:flex items-center space-x-4">
+                        <div className="hidden md:flex items-center space-x-6">
                             {user && (
-                                <div className="flex items-center space-x-1">
-                                    <User className={`w-5 h-5 ${darkMode ? 'text-white' : 'text-gray-800'}`} />
-                                    <span className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-gray-800'}`}>{`Hola, ${user}`}</span>
-                                </div>
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="flex items-center space-x-2"
+                                >
+                                    <User className="h-4 w-4" />
+                                    <span className="font-medium">{user}</span>
+                                </motion.div>
                             )}
 
                             <button
                                 onClick={toggleDarkMode}
-                                className={`p-2 rounded-full transition duration-300 ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'} focus:outline-none`}
-                                aria-label={darkMode ? 'Activar modo claro' : 'Activar modo oscuro'}
+                                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                aria-label="Toggle theme"
                             >
-                                {darkMode ? (
-                                    <Sun className="text-yellow-300 w-5 h-5" />
-                                ) : (
-                                    <Moon className="text-gray-800 w-5 h-5" />
-                                )}
-                            </button>
-
-                            {user ? (
-                                <button
-                                    onClick={handleSignOut}
-                                    className="flex items-center bg-red-600 text-white px-3 py-1 rounded-md shadow-md transition duration-200 hover:bg-red-700 focus:outline-none text-sm"
-                                >
-                                    <User className="mr-1 w-4 h-4" />
-                                    <span className="font-medium">Sign Out</span>
-                                </button>
-                            ) : (
-                                <button
-                                    onClick={openModal}
-                                    className="flex items-center bg-blue-600 text-white px-3 py-1 rounded-md shadow-md transition duration-200 hover:bg-blue-700 focus:outline-none text-sm"
-                                >
-                                    <User className="mr-1 w-4 h-4" />
-                                    <span className="font-medium">Sign In</span>
-                                </button>
-                            )}
-                        </div>
-
-                        <div className="sm:hidden">
-                            <button
-                                onClick={toggleMobileMenu}
-                                className={`p-2 rounded-md ${darkMode ? 'text-white' : 'text-gray-800'}`}
-                            >
-                                <Menu className="w-6 h-6" />
-                            </button>
-                        </div>
-                    </div>
-
-                    {mobileMenuOpen && (
-                        <div className="sm:hidden py-2">
-                            {user && (
-                                <div className="flex items-center space-x-1 mb-2">
-                                    <User className={`w-5 h-5 ${darkMode ? 'text-white' : 'text-gray-800'}`} />
-                                    <span className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-gray-800'}`}>{`Hola, ${user}`}</span>
-                                </div>
-                            )}
-                            <div className="flex flex-col space-y-2">
-                                <button
-                                    onClick={toggleDarkMode}
-                                    className={`flex items-center p-2 rounded-md transition duration-300 ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'} focus:outline-none`}
+                                <motion.div
+                                    initial={false}
+                                    animate={{ rotate: darkMode ? 180 : 0 }}
                                 >
                                     {darkMode ? (
-                                        <Sun className="text-yellow-300 w-5 h-5 mr-2" />
+                                        <Sun className="h-5 w-5 text-yellow-500" />
                                     ) : (
-                                        <Moon className="text-gray-800 w-5 h-5 mr-2" />
+                                        <Moon className="h-5 w-5 text-gray-600" />
                                     )}
-                                    <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
-                                </button>
+                                </motion.div>
+                            </button>
 
-                                {user ? (
-                                    <button
-                                        onClick={handleSignOut}
-                                        className="flex items-center bg-red-600 text-white px-3 py-2 rounded-md shadow-md transition duration-200 hover:bg-red-700 focus:outline-none text-sm"
-                                    >
-                                        <User className="mr-2 w-4 h-4" />
-                                        <span className="font-medium">Sign Out</span>
-                                    </button>
-                                ) : (
-                                    <button
-                                        onClick={openModal}
-                                        className="flex items-center bg-blue-600 text-white px-3 py-2 rounded-md shadow-md transition duration-200 hover:bg-blue-700 focus:outline-none text-sm"
-                                    >
-                                        <User className="mr-2 w-4 h-4" />
-                                        <span className="font-medium">Sign In</span>
-                                    </button>
-                                )}
-                            </div>
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={user ? handleSignOut : openModal}
+                                className={`btn ${user
+                                        ? 'bg-red-600 hover:bg-red-700 text-white'
+                                        : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                                    }`}
+                            >
+                                {user ? 'Sign Out' : 'Sign In'}
+                            </motion.button>
                         </div>
-                    )}
+
+                        <button
+                            onClick={toggleMobileMenu}
+                            className="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+                        >
+                            <Menu className="h-6 w-6" />
+                        </button>
+                    </div>
+
+                    <AnimatePresence>
+                        {mobileMenuOpen && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                className="md:hidden py-4"
+                            >
+                                <nav className="flex flex-col space-y-4">
+                                    {user && (
+                                        <div className="flex items-center space-x-2 px-2">
+                                            <User className="h-4 w-4" />
+                                            <span className="font-medium">{user}</span>
+                                        </div>
+                                    )}
+
+                                    <button
+                                        onClick={toggleDarkMode}
+                                        className="flex items-center space-x-2 px-2 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+                                    >
+                                        {darkMode ? (
+                                            <Sun className="h-4 w-4 text-yellow-500" />
+                                        ) : (
+                                            <Moon className="h-4 w-4" />
+                                        )}
+                                        <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+                                    </button>
+
+                                    <button
+                                        onClick={user ? handleSignOut : openModal}
+                                        className={`flex items-center space-x-2 px-2 py-2 rounded-md ${user
+                                                ? 'bg-red-600 hover:bg-red-700 text-white'
+                                                : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                                            }`}
+                                    >
+                                        <User className="h-4 w-4" />
+                                        <span>{user ? 'Sign Out' : 'Sign In'}</span>
+                                    </button>
+                                </nav>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </header>
 
-            <main className="w-full flex-grow max-w-7xl mx-auto p-6">
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <Modal isOpen={isModalOpen} onClose={closeModal} darkMode={darkMode}>
-                    <h2 className="text-2xl font-bold mb-4">{isLogin ? 'Iniciar Sesión' : 'Registrarse'}</h2>
-                    {isLogin ? (
-                        <LoginForm onLoginSuccess={handleLoginSuccess} darkMode={darkMode} /> 
-                    ) : (
-                        <RegisterForm onRegisterSuccess={handleLoginSuccess} darkMode={darkMode} />
-                    )}
-                    <button onClick={toggleForm} className="mt-4 text-blue-500 hover:underline">
-                        {isLogin ? '¿No tienes una cuenta? Regístrate aquí' : '¿Ya tienes cuenta? Inicia sesión aquí'}
-                    </button>
+                    <div className="space-y-6">
+                        <h2 className="text-2xl font-bold">
+                            {isLogin ? 'Welcome Back' : 'Create Account'}
+                        </h2>
+                        {isLogin ? (
+                            <LoginForm onLoginSuccess={handleLoginSuccess} darkMode={darkMode} />
+                        ) : (
+                            <RegisterForm onRegisterSuccess={handleLoginSuccess} darkMode={darkMode} />
+                        )}
+                        <button
+                            onClick={toggleForm}
+                            className="w-full text-indigo-600 dark:text-indigo-400 hover:underline"
+                        >
+                            {isLogin ? 'Need an account? Sign up' : 'Already have an account? Sign in'}
+                        </button>
+                    </div>
                 </Modal>
 
-                <div className="flex justify-between mb-4">
-                    <button
+                <div className="space-y-6">
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                         onClick={toggleFilter}
-                        className={`px-4 py-2 rounded-md transition duration-200 ${darkMode
-                            ? 'bg-blue-600 text-white hover:bg-blue-700'
-                            : 'bg-blue-500 text-white hover:bg-blue-600'
+                        className={`btn ${filterOpen
+                                ? 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white'
+                                : 'bg-indigo-600 text-white hover:bg-indigo-700'
                             }`}
                     >
-                        {filterOpen ? 'Cerrar Filtros' : 'Filtrar Artículos'}
-                    </button>
-                </div>
+                        {filterOpen ? (
+                            <X className="inline-block w-4 h-4 mr-2" />
+                        ) : (
+                            <Filter className="inline-block w-4 h-4 mr-2" />
+                        )}
+                        {filterOpen ? 'Close Filters' : 'Filter Articles'}
+                    </motion.button>
 
-                {filterOpen && (
-                    <div className={`w-full rounded-md p-4 mb-4 transition-all duration-300 shadow-lg ${darkMode ? 'bg-gray-800' : 'bg-gray-100'} min-w-[300px]`}>
-                        <h2 className={`text-lg font-semibold mb-2 ${darkMode ? 'text-white' : 'text-gray-800'}`}>Filtrar por:</h2>
-                        <div className="mt-4">
-                            <h3 className={`font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Temas</h3>
-                            <input
-                                type="text"
-                                placeholder="Escribir temas o palabras clave"
-                                className={`border rounded-md p-2 w-full mt-1 transition duration-200 ${darkMode
-                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                                    }`}
-                                onChange={(e) => setFilter(e.target.value)}
-                            />
-                        </div>
-                        <div className="mt-4">
-                            <h3 className={`font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>Fuentes:</h3>
-                            <input
-                                type="text"
-                                placeholder="Escribir fuentes"
-                                className={`border rounded-md p-2 w-full mt-1 transition duration-200 ${darkMode
-                                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400'
-                                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                                    }`}
-                                onChange={(e) => setSources(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                )}
-                <ArticleGrid
-                    darkMode={darkMode}
-                    filter={filter}
-                    selectedTopics={selectedTopics}
-                    sources={sources}
-                    username={user}
-                />
+                    <AnimatePresence>
+                        {filterOpen && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20  }}
+                                transition={{ duration: 0.2 }}
+                                className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-4"
+                            >
+                                <div className="space-y-2">
+                                    <h3 className="font-medium">Topics</h3>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter topics or keywords"
+                                        onChange={(e) => setFilter(e.target.value)}
+                                        className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <h3 className="font-medium">Sources</h3>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter sources"
+                                        onChange={(e) => setSources(e.target.value)}
+                                        className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent"
+                                    />
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    <ArticleGrid
+                        darkMode={darkMode}
+                        filter={filter}
+                        selectedTopics={selectedTopics}
+                        sources={sources}
+                        username={user}
+                    />
+                </div>
             </main>
         </div>
     );

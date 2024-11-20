@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { ExternalLink, Clock, Building2 } from 'lucide-react';
 
 interface Article {
     source: {
@@ -17,51 +19,113 @@ interface Article {
 interface ArticleCardProps {
     article: Article;
     darkMode: boolean;
+    index: number;
 }
 
-const ArticleCard: React.FC<ArticleCardProps> = ({ article, darkMode }) => {
+const ArticleCard: React.FC<ArticleCardProps> = ({ article, darkMode, index }) => {
+    const cardVariants = {
+        hidden: { 
+            opacity: 0,
+            y: 20,
+        },
+        visible: { 
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.5,
+                delay: index * 0.1,
+                ease: "easeOut"
+            }
+        },
+        hover: {
+            y: -8,
+            transition: {
+                duration: 0.3,
+                ease: "easeInOut"
+            }
+        }
+    };
+
+    const imageVariants = {
+        hover: {
+            scale: 1.05,
+            transition: {
+                duration: 0.3,
+                ease: "easeInOut"
+            }
+        }
+    };
+
     return (
-        <div className={`border rounded-lg shadow-md overflow-hidden transition-all duration-300 ${
-            darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-        }`}>
-            <img 
-                src={article.urlToImage || 'https://via.placeholder.com/400x200?text=No+Image'} 
-                alt={article.title} 
-                className="w-full h-48 sm:h-56 md:h-64 object-cover"
-            />
-            <div className="p-4">
-                <h2 className={`text-lg sm:text-xl font-semibold mb-2 line-clamp-2 ${
+        <motion.div
+            variants={cardVariants}
+            initial="hidden"
+            animate="visible"
+            whileHover="hover"
+            className={`group relative rounded-xl shadow-lg overflow-hidden transition-all duration-300 ${
+                darkMode 
+                    ? 'bg-gray-800/50 hover:bg-gray-800/80 backdrop-blur-sm' 
+                    : 'bg-white/50 hover:bg-white/80 backdrop-blur-sm'
+            } border border-gray-200/20`}
+        >
+            <div className="aspect-video overflow-hidden">
+                <motion.img 
+                    variants={imageVariants}
+                    src={article.urlToImage || 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800&auto=format&fit=crop'} 
+                    alt={article.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                />
+            </div>
+
+            <div className="p-6">
+                <div className="flex items-center space-x-2 mb-4">
+                    <Building2 className={`w-4 h-4 ${darkMode ? 'text-indigo-400' : 'text-indigo-600'}`} />
+                    <span className={`text-xs font-medium ${
+                        darkMode ? 'text-gray-300' : 'text-gray-600'
+                    }`}>
+                        {article.source.name}
+                    </span>
+                    <span className="text-gray-300">•</span>
+                    <Clock className={`w-4 h-4 ${darkMode ? 'text-indigo-400' : 'text-indigo-600'}`} />
+                    <time className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        {new Date(article.publishedAt).toLocaleDateString(undefined, {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                        })}
+                    </time>
+                </div>
+
+                <h2 className={`text-xl font-bold mb-3 line-clamp-2 ${
                     darkMode ? 'text-white' : 'text-gray-900'
                 }`}>
                     {article.title}
                 </h2>
-                <p className={`text-sm sm:text-base mb-3 line-clamp-3 ${
+
+                <p className={`text-sm mb-4 line-clamp-3 ${
                     darkMode ? 'text-gray-300' : 'text-gray-600'
                 }`}>
                     {article.description}
                 </p>
-                <p className={`text-xs sm:text-sm mb-1 ${
-                    darkMode ? 'text-gray-400' : 'text-gray-500'
-                }`}>
-                    <strong>Source:</strong> {article.source.name}
-                </p>
-                <p className={`text-xs sm:text-sm mb-2 ${
-                    darkMode ? 'text-gray-400' : 'text-gray-500'
-                }`}>
-                    {new Date(article.publishedAt).toLocaleDateString()}
-                </p>
-                <a 
-                    href={article.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className={`text-sm sm:text-base font-medium hover:underline ${
-                        darkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-800'
+
+                <motion.a 
+                    href={article.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center space-x-2 text-sm font-semibold ${
+                        darkMode 
+                            ? 'text-indigo-400 hover:text-indigo-300' 
+                            : 'text-indigo-600 hover:text-indigo-700'
                     }`}
+                    whileHover={{ x: 5 }}
+                    transition={{ duration: 0.2 }}
                 >
-                    Read more
-                </a>
+                    <span>Read full article</span>
+                    <ExternalLink className="w-4 h-4" />
+                </motion.a>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
