@@ -98,8 +98,8 @@ const App: React.FC = () => {
                                 whileTap={{ scale: 0.95 }}
                                 onClick={user ? handleSignOut : openModal}
                                 className={`btn ${user
-                                        ? 'bg-red-600 hover:bg-red-700 text-white'
-                                        : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                                    ? 'bg-red-600 hover:bg-red-700 text-white'
+                                    : 'bg-indigo-600 hover:bg-indigo-700 text-white'
                                     }`}
                             >
                                 {user ? 'Sign Out' : 'Sign In'}
@@ -117,10 +117,11 @@ const App: React.FC = () => {
                     <AnimatePresence>
                         {mobileMenuOpen && (
                             <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                exit={{ opacity: 0, height: 0 }}
-                                className="md:hidden py-4"
+                                initial={{ opacity: 0, maxHeight: 0 }}
+                                animate={{ opacity: 1, maxHeight: '9999px' }} 
+                                exit={{ opacity: 0, maxHeight: 0 }}
+                                transition={{ duration: 0.4, ease: "easeOut" }}
+                                className="md:hidden py-4 overflow-hidden"
                             >
                                 <nav className="flex flex-col space-y-4">
                                     {user && (
@@ -145,8 +146,8 @@ const App: React.FC = () => {
                                     <button
                                         onClick={user ? handleSignOut : openModal}
                                         className={`flex items-center space-x-2 px-2 py-2 rounded-md ${user
-                                                ? 'bg-red-600 hover:bg-red-700 text-white'
-                                                : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                                            ? 'bg-red-600 hover:bg-red-700 text-white'
+                                            : 'bg-indigo-600 hover:bg-indigo-700 text-white'
                                             }`}
                                     >
                                         <User className="h-4 w-4" />
@@ -156,6 +157,8 @@ const App: React.FC = () => {
                             </motion.div>
                         )}
                     </AnimatePresence>
+
+
                 </div>
             </header>
 
@@ -185,8 +188,8 @@ const App: React.FC = () => {
                         whileTap={{ scale: 0.95 }}
                         onClick={toggleFilter}
                         className={`btn ${filterOpen
-                                ? 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white'
-                                : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                            ? 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white'
+                            : 'bg-indigo-600 text-white hover:bg-indigo-700'
                             }`}
                     >
                         {filterOpen ? (
@@ -197,44 +200,59 @@ const App: React.FC = () => {
                         {filterOpen ? 'Close Filters' : 'Filter Articles'}
                     </motion.button>
 
-                    <AnimatePresence>
-                        {filterOpen && (
-                            <motion.div
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20  }}
-                                transition={{ duration: 0.2 }}
-                                className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 space-y-4"
-                            >
-                                <div className="space-y-2">
-                                    <h3 className="font-medium">Topics</h3>
-                                    <input
-                                        type="text"
-                                        placeholder="Enter topics or keywords"
-                                        onChange={(e) => setFilter(e.target.value)}
-                                        className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <h3 className="font-medium">Sources</h3>
-                                    <input
-                                        type="text"
-                                        placeholder="Enter sources"
-                                        onChange={(e) => setSources(e.target.value)}
-                                        className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent"
-                                    />
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                    <div className="relative">
+                        <AnimatePresence mode="popLayout">
+                            {filterOpen && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 'auto' }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 500,
+                                        damping: 30,
+                                        opacity: { duration: 0.2 }
+                                    }}
+                                    className="bg-white dark:bg-gray-800 rounded-lg shadow-lg mb-4 p-6 space-y-4 overflow-hidden"
+                                >
+                                    <div className="space-y-2">
+                                        <h3 className="font-medium">Topics</h3>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter topics or keywords"
+                                            onChange={(e) => setFilter(e.target.value)}
+                                            className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <h3 className="font-medium">Sources</h3>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter sources"
+                                            onChange={(e) => setSources(e.target.value)}
+                                            className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent"
+                                        />
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
-                    <ArticleGrid
-                        darkMode={darkMode}
-                        filter={filter}
-                        selectedTopics={selectedTopics}
-                        sources={sources}
-                        username={user}
-                    />
+                        <motion.div
+                            layout
+                            transition={{
+                                type: "spring",
+                                damping: 20
+                            }}
+                        >
+                            <ArticleGrid
+                                darkMode={darkMode}
+                                filter={filter}
+                                selectedTopics={selectedTopics}
+                                sources={sources}
+                                username={user}
+                            />
+                        </motion.div>
+                    </div>
                 </div>
             </main>
         </div>
