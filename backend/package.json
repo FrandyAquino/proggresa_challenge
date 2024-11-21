@@ -31,7 +31,7 @@
   },
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc",
+    "build": "vite build --output public",
     "lint": "eslint ./src/**/*.ts",
     "lint:fix": "eslint ./src/**/*.ts --fix"
   },
