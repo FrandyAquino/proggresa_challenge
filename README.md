@@ -1,10 +1,9 @@
-# 🌐 Customizable News Aggregator - Aplicación web de noticias personalizable
+# 🌐 News Hub - Aplicación web de noticias personalizable
 
-## 🧠 Progressa Challenge - Una solución digital completa
+Bienvenidos a **News Hub**, es una aplicación de noticias diseñada para ofrecer una experiencia de usuario mejorada a través de un enfoque estético y funcional. Se enfoca en implementar características como la persistencia de preferencias del usuario, animaciones y transiciones suaves, además de un diseño responsivo que incluye un menú hamburguesa. Su objetivo es facilitar el acceso a contenido relevante de noticias mientras se mantiene una interfaz atractiva y fácil de usar.
 
-Bienvenidos a **News Aggregator**, es una aplicación de noticias diseñada para ofrecer una experiencia de usuario mejorada a través de un enfoque estético y funcional. Se enfoca en implementar características como la persistencia de preferencias del usuario, animaciones y transiciones suaves, además de un diseño responsivo que incluye un menú hamburguesa. Su objetivo es facilitar el acceso a contenido relevante de noticias mientras se mantiene una interfaz atractiva y fácil de usar.
+![image](https://github.com/user-attachments/assets/cbe25533-f42f-496c-ada2-4d558cb99f48)
 
-![image](https://github.com/user-attachments/assets/3a4031af-a4f0-4292-9ea8-fd1ed15ee7ce)
 
 ## 🚀 Funcionalidades
 
@@ -16,7 +15,7 @@ Bienvenidos a **News Aggregator**, es una aplicación de noticias diseñada para
 ## 📁 Estructura del Proyecto
 
 ```plaintext
-ProggresaChallenge/
+NewsHub/
 ├── backend/
 |   ├── dist/
 |   ├── node_modules/
