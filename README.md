@@ -101,12 +101,20 @@ Para clonar este proyecto, sigue los siguientes pasos:
    npm install
    ```
 
-4. **Crea el archivo .env**: Ahora ve a la carpeta backend y crea un archivo que se llame ".env" y pega estas variables de entorno:
+4. **Crea el archivo .env**: Ahora ve a la carpeta backend y crea un archivo que se llame ".env" y añada las siguientes variables de entorno:
    ```sh
    PORT=5000
-   MONGO_URI=mongodb+srv://frandyjavieraquino13:kLgQGxZoR1bGzB7N@proggresa.pfpvc.mongodb.net/proggresa?retryWrites=true&w=majority&appName=proggresa
-   NEW_API_TOKEN="f8c4d8121f824794a3ca6c4c09230975"
+   MONGO_URI="tu_mongo_uri_aqui"
+   NEW_API_TOKEN="tu_clave_de_api_aqui"
    ```
+  **Nota:**
+
+- **MONGO_URI**: Debes reemplazar `"tu_mongo_uri_aquí"` con la URI de conexión de tu base de datos MongoDB. Si no tienes una, crea una base de datos en [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) para obtener esta URI.
+- **NEWS_API_KEY**: Regístrate en [NewsAPI](https://newsapi.org/) para obtener tu clave de API y reemplaza `"tu_clave_de_api_aquí"`.
+
+**Ejecuta el proyecto:**  
+Una vez que hayas configurado las variables de entorno y las dependencias estén instaladas, puedes iniciar el backend y el frontend según sea necesario.
+
 
 ### 🎥 Uso de la Aplicación
 
