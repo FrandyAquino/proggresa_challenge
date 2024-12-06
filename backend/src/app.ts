@@ -8,7 +8,12 @@ import { sessionMiddleware } from './shared/middlewares/session'
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://newshub-nine.vercel.app', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(sessionMiddleware as any)
