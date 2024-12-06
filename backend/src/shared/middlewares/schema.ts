@@ -1,4 +1,4 @@
-import { NextFunction,Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { ZodSchema } from 'zod'
 import { errorZodResponse } from '../functions/response'
 
