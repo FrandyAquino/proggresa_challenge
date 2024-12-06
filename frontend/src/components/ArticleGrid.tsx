@@ -81,7 +81,7 @@ const ArticleGrid: React.FC<ArticleGridProps> = ({ darkMode, filter, selectedTop
     const fetchArticles = async () => {
         setLoading(true);
         try {
-            let url = 'http://localhost:5000/api/articles';
+            let url = 'https://newshub-nine.vercel.app/api/articles';
             const params = [
                 selectedTopics.length > 0 ? `category=${selectedTopics.join(',')}` : '',
                 debouncedSources ? `sources=${encodeURIComponent(debouncedSources)}` : '',
