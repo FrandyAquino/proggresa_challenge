@@ -4,6 +4,6 @@ import { sessionMiddleware } from '../shared/middlewares/session';
 
 const router = Router();
 
-router.get('/', sessionMiddleware, getArticles);
+router.get('/', getArticles);
 
 export default router;
