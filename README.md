@@ -1,10 +1,9 @@
-# 🌐 Customizable News Aggregator - Aplicación web de noticias personalizable
+# 🌐 News Hub - Aplicación web de noticias personalizable
 
-## 🧠 Progressa Challenge - Una solución digital completa
+Bienvenidos a **News Hub**, es una aplicación de noticias diseñada para ofrecer una experiencia de usuario mejorada a través de un enfoque estético y funcional. Se enfoca en implementar características como la persistencia de preferencias del usuario, animaciones y transiciones suaves, además de un diseño responsivo que incluye un menú hamburguesa. Su objetivo es facilitar el acceso a contenido relevante de noticias mientras se mantiene una interfaz atractiva y fácil de usar.
 
-Bienvenidos a **News Aggregator**, es una aplicación de noticias diseñada para ofrecer una experiencia de usuario mejorada a través de un enfoque estético y funcional. Se enfoca en implementar características como la persistencia de preferencias del usuario, animaciones y transiciones suaves, además de un diseño responsivo que incluye un menú hamburguesa. Su objetivo es facilitar el acceso a contenido relevante de noticias mientras se mantiene una interfaz atractiva y fácil de usar.
+![image](https://github.com/user-attachments/assets/cbe25533-f42f-496c-ada2-4d558cb99f48)
 
-![image](https://github.com/user-attachments/assets/3a4031af-a4f0-4292-9ea8-fd1ed15ee7ce)
 
 ## 🚀 Funcionalidades
 
@@ -16,7 +15,7 @@ Bienvenidos a **News Aggregator**, es una aplicación de noticias diseñada para
 ## 📁 Estructura del Proyecto
 
 ```plaintext
-ProggresaChallenge/
+NewsHub/
 ├── backend/
 |   ├── dist/
 |   ├── node_modules/
@@ -102,12 +101,20 @@ Para clonar este proyecto, sigue los siguientes pasos:
    npm install
    ```
 
-4. **Crea el archivo .env**: Ahora ve a la carpeta backend y crea un archivo que se llame ".env" y pega estas variables de entorno:
+4. **Crea el archivo .env**: Ahora ve a la carpeta backend y crea un archivo que se llame ".env" y añada las siguientes variables de entorno:
    ```sh
    PORT=5000
-   MONGO_URI=mongodb+srv://frandyjavieraquino13:kLgQGxZoR1bGzB7N@proggresa.pfpvc.mongodb.net/proggresa?retryWrites=true&w=majority&appName=proggresa
-   NEW_API_TOKEN="f8c4d8121f824794a3ca6c4c09230975"
+   MONGO_URI="tu_mongo_uri_aqui"
+   NEW_API_TOKEN="tu_clave_de_api_aqui"
    ```
+  **Nota:**
+
+- **MONGO_URI**: Debes reemplazar `"tu_mongo_uri_aquí"` con la URI de conexión de tu base de datos MongoDB. Si no tienes una, crea una base de datos en [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) para obtener esta URI.
+- **NEWS_API_KEY**: Regístrate en [NewsAPI](https://newsapi.org/) para obtener tu clave de API y reemplaza `"tu_clave_de_api_aquí"`.
+
+**Ejecuta el proyecto:**  
+Una vez que hayas configurado las variables de entorno y las dependencias estén instaladas, puedes iniciar el backend y el frontend según sea necesario.
+
 
 ### 🎥 Uso de la Aplicación
 
