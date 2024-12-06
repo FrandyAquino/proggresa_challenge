@@ -15,7 +15,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegisterSuccess, darkMode
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await axios.post('https://newshub-nine.vercel.app/api/users', {
+            await axios.post('https://newshub-server.vercel.app/api/users', {
                 username,
                 password,
             });
